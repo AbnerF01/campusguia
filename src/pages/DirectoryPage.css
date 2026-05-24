@@ -1,0 +1,49 @@
+.directory-page {
+  background-color: var(--bg-color);
+  overflow-y: auto;
+}
+
+.directory-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 20px;
+}
+
+.directory-card {
+  padding: 16px;
+  border-radius: 12px;
+  background-color: var(--white);
+}
+
+.directory-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--buap-blue);
+  margin-bottom: 6px;
+}
+
+.directory-desc {
+  margin-bottom: 12px;
+}
+
+.directory-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--glass-border);
+  padding-top: 12px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-primary);
+}
+
+.detail-icon {
+  color: var(--buap-gold);
+}
+
+/* Removed dark mode */
