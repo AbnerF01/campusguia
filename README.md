@@ -24,7 +24,7 @@ Sigue estos pasos cuidadosamente para levantar el proyecto al 100%:
 
 ### 1. Clonar el repo
 
-git clone <URL_DE_TU_REPO>
+git clone <URL_DE_ESTE_REPO>
 
 cd Proyecto-Final
 
@@ -33,6 +33,7 @@ cd Proyecto-Final
 Abre una terminal y entra a la carpeta del backend:
 
 cd backend
+
 npm install
 
 Configura tus credenciales de MySQL. Si tu MySQL tiene contraseña, edita el archivo backend/.env y colócala en DB_PASSWORD
@@ -51,6 +52,7 @@ node server.js
 Abre otra terminal, asegúrate de estar en la raíz del proyecto y ejecuta:
 
 npm install
+
 npm run dev
 
 Entra a http://localhost:5173. 
