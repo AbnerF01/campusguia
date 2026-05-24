@@ -25,6 +25,7 @@ Sigue estos pasos cuidadosamente para levantar el proyecto al 100%:
 ### 1. Clonar el repo
 
 git clone <URL_DE_TU_REPO>
+
 cd Proyecto-Final
 
 
@@ -34,20 +35,13 @@ Abre una terminal y entra a la carpeta del backend:
 cd backend
 npm install
 
-Configura tus credenciales de MySQL. Si tu MySQL tiene contraseña, edita el archivo backend/.env y colócala en DB_PASSWORD:
-
-PORT=5000
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=
-DB_NAME=campusguia_db
-JWT_SECRET=super_secret_key_buap_campusguia
-
+Configura tus credenciales de MySQL. Si tu MySQL tiene contraseña, edita el archivo backend/.env y colócala en DB_PASSWORD
 
 Inicializa la base de datos y llénala de datos con los siguientes comandos:
 
-node db/init.js    # Crea la base de datos y las tablas (usuarios, lugares, favoritos)
-node db/seed.js    # Rellena la base de datos
+node db/init.js 
+
+node db/seed.js   
 
 Enciende el servidor Backend:
 
@@ -63,7 +57,7 @@ Entra a http://localhost:5173.
 
 ---
 
-## Tecnologías Utilizadas
+## Tecnologías utilizadas
 Frontend:
 - React.js (Vite)
 - CSS3
