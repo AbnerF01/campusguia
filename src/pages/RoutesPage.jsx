@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Map, Navigation } from 'lucide-react';
-import { getAllBuildings } from '../data/places';
+import { PlacesContext } from '../context/PlacesContext';
 import './RoutesPage.css';
 
 const RoutesPage = () => {
+  const { getAllBuildings } = useContext(PlacesContext);
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const RoutesPage = () => {
           </select>
         </div>
 
-        <div className="form-group mb-6">
+        <div className="form-group" style={{ marginBottom: '40px' }}>
           <label className="text-xs font-bold text-primary mb-1 block">Destino</label>
           <select 
             className="route-select w-full" 

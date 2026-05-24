@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
-import { Search as SearchIcon, MapPin, ChevronRight, ChevronDown, Building2 } from 'lucide-react';
+import React, { useState, useContext } from 'react';
+import { Search as SearchIcon, MapPin, ChevronRight, ChevronDown, Building2, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { poIs, getAllBuildings } from '../data/places';
+import { PlacesContext } from '../context/PlacesContext';
+import { AuthContext } from '../context/AuthContext';
 import './SearchPage.css';
 
 const SearchPage = () => {
+  const { poIs, getAllBuildings, loading } = useContext(PlacesContext);
+  const { favoriteIds, toggleFavorite, user } = useContext(AuthContext);
   const [query, setQuery] = useState('');
   const [expandedId, setExpandedId] = useState(null);
   const navigate = useNavigate();
 
-  // Si hay query, buscamos en todas las facultades y todos los edificios
   const allBuildings = getAllBuildings();
-  
   const isSearching = query.trim().length > 0;
   
   const searchResults = isSearching 
     ? allBuildings.filter(b => 
         b.name.toLowerCase().includes(query.toLowerCase()) || 
-        b.parentName.toLowerCase().includes(query.toLowerCase())
+        (b.parentName && b.parentName.toLowerCase().includes(query.toLowerCase()))
       )
     : [];
 
@@ -48,23 +49,38 @@ const SearchPage = () => {
       </div>
 
       <div className="results-container">
-        {isSearching ? (
+        {loading ? (
+          <p style={{ textAlign: 'center', padding: '20px' }}>Cargando lugares...</p>
+        ) : isSearching ? (
           /* Modo Búsqueda: Lista plana de edificios encontrados */
           searchResults.length > 0 ? (
             searchResults.map(b => (
               <div 
                 key={b.id} 
                 className="result-item transition-all hover-scale"
-                onClick={() => handleSelectPlace(b.lat, b.lng)}
               >
-                <div className="result-icon">
+                <div className="result-icon" onClick={() => handleSelectPlace(b.lat, b.lng)} style={{ cursor: 'pointer' }}>
                   <MapPin size={24} color="var(--buap-gold)" />
                 </div>
-                <div className="result-info">
+                <div className="result-info" onClick={() => handleSelectPlace(b.lat, b.lng)} style={{ cursor: 'pointer', flex: 1 }}>
                   <h4 className="result-name">{b.name}</h4>
                   <span className="result-category">{b.parentName}</span>
                 </div>
-                <ChevronRight size={20} color="var(--text-secondary)" />
+                
+                {user && (
+                  <div 
+                    onClick={(e) => { e.stopPropagation(); toggleFavorite(b.id); }}
+                    style={{ padding: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                  >
+                    <Star 
+                      size={24} 
+                      color={favoriteIds.includes(b.id) ? 'var(--buap-gold)' : 'var(--text-secondary)'} 
+                      fill={favoriteIds.includes(b.id) ? 'var(--buap-gold)' : 'none'} 
+                    />
+                  </div>
+                )}
+                
+                <ChevronRight size={20} color="var(--text-secondary)" onClick={() => handleSelectPlace(b.lat, b.lng)} style={{ cursor: 'pointer' }} />
               </div>
             ))
           ) : (
@@ -98,10 +114,25 @@ const SearchPage = () => {
                     <div 
                       key={b.id} 
                       className="building-item transition-all active-scale"
-                      onClick={() => handleSelectPlace(b.lat, b.lng)}
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
                     >
-                      <MapPin size={16} color="var(--buap-gold)" />
-                      <span className="building-name">{b.name}</span>
+                      <div onClick={() => handleSelectPlace(b.lat, b.lng)} style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: 1, cursor: 'pointer' }}>
+                        <MapPin size={16} color="var(--buap-gold)" />
+                        <span className="building-name">{b.name}</span>
+                      </div>
+                      
+                      {user && (
+                        <div 
+                          onClick={(e) => { e.stopPropagation(); toggleFavorite(b.id); }}
+                          style={{ padding: '8px', cursor: 'pointer' }}
+                        >
+                          <Star 
+                            size={20} 
+                            color={favoriteIds.includes(b.id) ? 'var(--buap-gold)' : 'var(--text-secondary)'} 
+                            fill={favoriteIds.includes(b.id) ? 'var(--buap-gold)' : 'none'} 
+                          />
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>

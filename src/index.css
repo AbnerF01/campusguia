@@ -40,13 +40,12 @@ body {
   overflow-x: hidden;
 }
 
-/* App Layout Container - to simulate mobile app behavior */
+/* App Layout Container - responsive for all devices */
 #root {
   display: flex;
   flex-direction: column;
   height: 100vh;
   width: 100vw;
-  max-width: 600px;
   margin: 0 auto;
   position: relative;
   background-color: var(--bg-color);

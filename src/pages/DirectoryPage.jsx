@@ -1,6 +1,6 @@
-import React from 'react';
-import { Phone, Clock, Mail } from 'lucide-react';
-import { poIs } from '../data/places';
+import React, { useState, useContext } from 'react';
+import { Phone, Clock, Mail, Search, ChevronDown, ChevronUp } from 'lucide-react';
+import { PlacesContext } from '../context/PlacesContext';
 import './DirectoryPage.css';
 
 const generalServices = [
@@ -30,26 +30,49 @@ const generalServices = [
   }
 ];
 
-// Unimos los servicios generales con las facultades que tienen contacto
-const directoryData = [
-  ...generalServices,
-  ...poIs.filter(poi => poi.contact).map(poi => ({
-    id: poi.id,
-    name: poi.name,
-    description: `Atención a estudiantes de la ${poi.name}.`,
-    contact: poi.contact
-  }))
-];
-
 const DirectoryPage = () => {
+  const { poIs, loading } = useContext(PlacesContext);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const directoryData = [
+    ...generalServices,
+    ...poIs.filter(poi => poi.contact).map(poi => ({
+      id: poi.id,
+      name: poi.name,
+      description: `Atención a estudiantes de la ${poi.name}.`,
+      contact: poi.contact
+    }))
+  ].filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
   return (
     <div className="directory-page page-container h-full w-full flex-col">
       <div className="p-4">
         <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--buap-blue)' }}>Directorio Administrativo</h2>
         <p className="text-sm text-secondary mb-4">Encuentra los contactos y horarios de las oficinas y Facultades.</p>
         
-        <div className="directory-list">
-          {directoryData.map((item) => (
+        <div className="search-bar mb-4" style={{ position: 'relative' }}>
+          <Search className="text-gray-400" size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }} />
+          <input 
+            type="text"
+            placeholder="Buscar por nombre..."
+            style={{ 
+              width: '100%', 
+              padding: '12px 12px 12px 40px', 
+              borderRadius: '8px', 
+              border: '1px solid var(--glass-border)',
+              backgroundColor: 'var(--glass-bg)',
+              color: 'var(--text-primary)',
+              boxShadow: 'var(--shadow-sm)'
+            }}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+
+        <div className="directory-list p-4 pb-20">
+          {loading ? (
+            <p style={{ textAlign: 'center' }}>Cargando directorio...</p>
+          ) : directoryData.map((item) => (
             <div key={item.id} className="directory-card glass transition-all hover-scale">
               <h3 className="directory-name">{item.name}</h3>
               <p className="directory-desc text-xs text-secondary">{item.description}</p>

@@ -1,0 +1,41 @@
+CREATE DATABASE IF NOT EXISTS campusguia_db;
+USE campusguia_db;
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS pois (
+    id VARCHAR(50) PRIMARY KEY,
+    type VARCHAR(50) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    category VARCHAR(100),
+    lat DECIMAL(10, 8) NOT NULL,
+    lng DECIMAL(11, 8) NOT NULL,
+    contact_phone VARCHAR(100),
+    contact_email VARCHAR(100),
+    contact_hours VARCHAR(100)
+);
+
+CREATE TABLE IF NOT EXISTS buildings (
+    id VARCHAR(50) PRIMARY KEY,
+    poi_id VARCHAR(50) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    lat DECIMAL(10, 8) NOT NULL,
+    lng DECIMAL(11, 8) NOT NULL,
+    FOREIGN KEY (poi_id) REFERENCES pois(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS favorites (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    building_id VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_favorite (user_id, building_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);

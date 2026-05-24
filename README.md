@@ -1,24 +1,75 @@
 # CampusGuía BUAP
 
-Aplicación web progresiva diseñada para facilitar la navegación peatonal y vehicular dentro de Ciudad Universitaria (CU) de la Benemérita Universidad Autónoma de Puebla.
+Aplicación web diseñada para facilitar la navegación dentro de Ciudad Universitaria (CU) de la Benemérita Universidad Autónoma de Puebla.
 
-## Características Principales
+## Características
 - Integración con Google Maps para rutas peatonales exactas.
-- Mapeo jerárquico de más de 120 edificios, incluyendo Facultades, EMAs, Direcciones y 19 puertas de acceso.
-- Contacto rápido con extensiones y correos oficiales de la universidad.
-- Guarda los salones utilizando LocalStorage.
+- Mapa de más de 120 edificios, incluyendo Facultades, EMAs y 19 puertas de acceso desde MySQL.
+- Búsqueda rápida con extensiones y correos oficiales de la universidad.
+- Registro e inicio de sesión usando JWT para guardar lugares favoritos.
 
-## Instalación
+---
 
-1. Clona el repo
-2. Instala las dependencias:
-   npm install
-3. Inicia el servidor de desarrollo:
-   npm run dev
+## Requisitos
+
+Antes de instalar el proyecto en cualquier otro dispositivo, asegúrate de tener:
+- [Node.js](https://nodejs.org/) (Versión 16 o superior).
+- Un servidor **MySQL** (ya sea XAMPP, Workbench, o Docker) corriendo en el puerto 3306.
+
+---
+
+## Instalación y Configuración
+
+Sigue estos pasos cuidadosamente para levantar el proyecto al 100%:
+
+### 1. Clonar el repo
+
+git clone <URL_DE_TU_REPO>
+cd Proyecto-Final
+
+
+### 2. Configurar el backend
+Abre una terminal y entra a la carpeta del backend:
+
+cd backend
+npm install
+
+Configura tus credenciales de MySQL. Si tu MySQL tiene contraseña, edita el archivo backend/.env y colócala en DB_PASSWORD:
+
+PORT=5000
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=campusguia_db
+JWT_SECRET=super_secret_key_buap_campusguia
+
+
+Inicializa la base de datos y llénala de datos con los siguientes comandos:
+
+node db/init.js    # Crea la base de datos y las tablas (usuarios, lugares, favoritos)
+node db/seed.js    # Rellena la base de datos
+
+Enciende el servidor Backend:
+
+node server.js
+
+### 3. Configurar el frontend
+Abre otra terminal, asegúrate de estar en la raíz del proyecto y ejecuta:
+
+npm install
+npm run dev
+
+Entra a http://localhost:5173. 
+
+---
 
 ## Tecnologías Utilizadas
+Frontend:
 - React.js (Vite)
-- CSS3 Modules
-- Lucide React (Iconografía)
-- Google Maps Iframe API
+- CSS3
+- Lucide React 
 
+Backend:
+- Node.js & Express
+- MySQL
+- JWT & bcrypt
