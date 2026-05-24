@@ -10,15 +10,11 @@ Aplicación web progresiva diseñada para facilitar la navegación peatonal y ve
 
 ## Instalación
 
-1. Clona el repositorio
+1. Clona el repo
 2. Instala las dependencias:
-   \`\`\`bash
    npm install
-   \`\`\`
 3. Inicia el servidor de desarrollo:
-   \`\`\`bash
    npm run dev
-   \`\`\`
 
 ## Tecnologías Utilizadas
 - React.js (Vite)
