@@ -9,6 +9,7 @@ async function initDb() {
     port: process.env.DB_PORT || 3306,
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME || 'campusguia_db',
     multipleStatements: true // Permite ejecutar múltiples consultas a la vez
   });
 

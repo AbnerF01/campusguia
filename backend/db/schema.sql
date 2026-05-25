@@ -1,5 +1,4 @@
-CREATE DATABASE IF NOT EXISTS campusguia_db;
-USE campusguia_db;
+
 
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
