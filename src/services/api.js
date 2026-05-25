@@ -1,4 +1,5 @@
-const API_URL = 'http://localhost:5000/api';
+// Usando la IP local para que pueda ser accedido desde el emulador o celular
+const API_URL = 'http://192.168.1.11:5000/api';
 
 export const fetchPlaces = async () => {
   const response = await fetch(`${API_URL}/places`);
